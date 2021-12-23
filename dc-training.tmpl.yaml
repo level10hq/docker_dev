@@ -15,7 +15,7 @@ spec:
         jobgroup: dc-jobs
     spec:
       nodeSelector:
-        eks.amazonaws.com/nodegroup: "training-demand-cmx"
+        eks.amazonaws.com/nodegroup: "training-demand-cmz"
       # allows this pod to be run on an nvidia.com/gpu tainted node
       tolerations:
       - key: "dedicated"

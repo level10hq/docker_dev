@@ -12,7 +12,17 @@ The docker-compose file will mount user''s `.aws` directory
 2. ```
    make set-kubeconfig
    ```
-3. run `kubectl` commands or use the IDE below to connect to the cluster control plane
+3. Create jobs from template
+
+   ```bash
+   ./generate.sh
+   ```
+4. Run jobs
+
+   ```
+   kubectl create -f ./jobs
+   ```
+5. run `kubectl` commands or use the IDE below to connect to the cluster control plane
 
 ## Kubernetes Destop IDE
 
