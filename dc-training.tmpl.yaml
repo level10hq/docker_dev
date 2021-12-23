@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  #generateName: dc-training-job 
+  # one day item will be clause
+  name: model-training-$ITEM
+  labels:
+    jobgroup: dc-jobs
+  namespace: argocd
+spec:
+  template:
+    metadata: 
+      name: dc-training
+      labels:
+        jobgroup: dc-jobs
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: "training-demand-cmx"
+      # allows this pod to be run on an nvidia.com/gpu tainted node
+      tolerations:
+      - key: "dedicated"
+        operator: "Exists"
+        effect: "NoSchedule"
+      containers:
+      - image: 208071568133.dkr.ecr.us-east-2.amazonaws.com/ml-core:latest
+        name: training
+        resources:
+          requests:
+            memory: "6Gi"            
+      restartPolicy: Never
+  backoffLimit: 1
+

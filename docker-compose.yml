@@ -1,0 +1,33 @@
+version: '3.7'
+
+networks:
+  dev-net:
+    driver: bridge
+
+volumes: 
+  bash_history: 
+  kubeconfig:
+
+services:
+
+  terragrunt: &tf
+    container_name: terragrunt    
+    #image: "cytopia/terragrunt"
+    build: .
+    networks:   [ dev-net]
+    working_dir:    "/data"
+    ports:
+      - '5080:8080'
+    environment:
+    #  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    #  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_PROFILE: tfuser
+      AWS_REGION: ${AWS_REGION:-us-east-2}        
+    volumes:     
+     - "./:/data"
+     - "~/.aws:/root/.aws"
+     - "bash_history:/commandhistory/.bash_history"
+     - "kubeconfig:/root/.kube"
+
+
+  
